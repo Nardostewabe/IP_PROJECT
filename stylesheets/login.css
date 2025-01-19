@@ -36,7 +36,7 @@
     margin: 0 auto;
 }
 iframe{
-    display: flex;
+    display: grid;
 }
 p {
     color:black ;

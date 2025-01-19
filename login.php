@@ -20,6 +20,7 @@ public function Validate_data($name,$email,$pass){
         $res = $conn->query($get);
         $uid = $res->fetch_array();
         echo "Your User Id is ";
+        $_SESSION['UID']=$uid[0];
         echo $uid[0];
     }
     else{
@@ -32,6 +33,7 @@ public function Validate_data($name,$email,$pass){
             $res = $conn->query($get);
             $sid = $res->fetch_array();
             echo "Your Seller Id is ";
+            $_SESSION['SID']=$sid[0];
             echo $sid[0];
         }
     }

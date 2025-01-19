@@ -124,10 +124,10 @@
             <td>3500ETB</td>
         </tr>
         <tr class="purchase">
-            <td><a href="purchase.php" id = "pur">Purchase</a></td>
-            <td><a href="purchase.php" id = "pur">Purchase</a></td>
-            <td><a href="purchase.php" id = "pur">Purchase</a></td>
-            <td><a href="purchase.php" id = "pur">Purchase</a></td>
+            <td><a href="purchase.php?name=Dino%20keychains&price=200ETB" id = "pur">Purchase</a></td>
+            <td><a href="purchase.php?name=Bear%20Basket&price=1700ETB" id = "pur">Purchase</a></td>
+            <td><a href="purchase.php?name=Granny%20square%20tote%20bag&price=800ETB" id = "pur">Purchase</a></td>
+            <td><a href="purchase.php?name=Full%20set%20(infant)&price=3500ETB" id = "pur">Purchase</a></td>
         </tr>
     </table>
     <footer>

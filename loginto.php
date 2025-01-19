@@ -10,6 +10,21 @@
     <link rel="stylesheet" href="stylesheets/login.css">
     <link rel="stylesheet" href="stylesheets/footer.css">
 </head>
+<style>
+    .log iframe{
+    justify-content: center;
+    background: lightpink;
+    position: relative;
+    top: 90px;
+    width: 400px;
+    height: 500px;
+    margin: 0 auto;
+}
+iframe{
+    display: flex;
+}
+</style>
+<script src="scripts\app.js"></script>
 <body background="images/yarnstuff.jpg">
     <nav class="navbar">
         <div class="navbar__container">
@@ -120,7 +135,7 @@
         </div>
     </div>
     <div class="log">
-        <iframe src="temp.html" frameborder="0"></iframe>
+        <iframe src="temp.html" frameborder="0">
     </div>
     <footer>
         <div class="footercontainer">
@@ -143,9 +158,5 @@
             </div>
         </div>
     </footer>
-</body>
-<script src="scripts\app.js"></script>
+                </body>
 </html>
-<?php
-include "login.php";
-?>

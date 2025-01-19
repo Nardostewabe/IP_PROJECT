@@ -128,11 +128,11 @@
             <td>80ETB</td>
         </tr>
         <tr class="purchase">
-            <td><a href="purchase.php" id = "pur">Purchase</a></td>
-            <td><a href="purchase.php" id = "pur">Purchase</a></td>
-            <td><a href="purchase.php" id = "pur">Purchase</a></td>
-            <td><a href="purchase.php" id = "pur">Purchase</a></td>
-        </tr>
+            <td><a href= "purchase.php?name=Dino%20keychains&price=20ETB">Purchase</a></td>
+            <td><a href= "purchase.php?name=Chunky%20mesh%20overshirt&price=100ETB">Purchase</a></td>
+            <td><a href= "purchase.php?name=Hearts&price=10ETB">Purchase</a></td>
+            <td><a href= "purchase.php?name=Heppatica%20granny%20top&price=80ETB">Purchase</a></td>
+    </tr>
     </table><br><br><br>
 <footer>
     <div class="footercontainer">

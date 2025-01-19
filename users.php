@@ -125,7 +125,7 @@ if(!$_SESSION){
     
 
 <a href="loginto.php"> 
-    <div class="alert">
+    <div class="alert" style = "background-color: pink">
   <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
   You have not logged in.
     </div>
@@ -143,8 +143,13 @@ else{
             <h1><?php echo $_SESSION['name'];?></h1>
             <h2><?php echo $_SESSION['usertype'];?></h2>
             <?php
-            if($_SESSION['usertype']=="Customer"){
-            echo "<a href='seller.php'><h3>Become A Seller</h3></a>";
+            if($_SESSION['usertype']=="Seller"){
+                echo "<h3>Your Seller Id is: ".$_SESSION['SID']."</h3>";
+            }
+
+            elseif($_SESSION['usertype']=="Customer"){
+                echo "<h3>Your User Id is: ".$_SESSION['UID']."</h3>";
+                echo "<a href='seller.php'><h3>Become A Seller</h3></a>";
             }
             ?>
         </div>
