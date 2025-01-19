@@ -11,8 +11,17 @@ else {
     $id = null;
 }
 
+
+
 if($id){
-    $userdata = U_fetchuser($id);
+    $fetcher = new u_fetchuser();
+    $userdata = $fetcher->fetchuser();
+
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+    $updateHandler = new updte_handler();
+    $updateHandler->handleUpdate();
+}
 
 
 

@@ -8,20 +8,21 @@ require_once "Database_connection.php"
 
             $db = new Database_connection();
             $conn = $db -> connect();
-
-            $holder = $this ->$conn -> prepare("SELECT * FROM users WHERE id = ?");
-            $holder -> bind_param("i", $id);
-            $holder -> execute();
-            $result = $holder->get_result();
-            $bundle = $result -> fetch_assoc();
-
-            $holder -> close();
-            $conn -> close();
-
-            return $bundle;
         }
+    public function fetchUser($id){
+
+        $holder = $this ->$conn -> prepare("SELECT * FROM users WHERE id = ?");
+        $holder -> bind_param("i", $id);
+        $holder -> execute();
+        $result = $holder->get_result();
+        $bundle = $result -> fetch_assoc();
+
+        return $bundle;
+            }
+    }
+        
     
-}
+
 
 
 
