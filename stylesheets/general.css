@@ -1,0 +1,126 @@
+.bigpic img {
+    display: flex;
+    position: relative;
+    left: 100px;
+    margin-top: 30px;
+    width: 80%;
+    height: 300px;
+}
+.s1{
+    display: block;
+    justify-content: space-between;
+    padding: 0px;
+    position: relative;
+    left: 100px;
+    top: 20px;
+    width: 80%;
+}
+.s1 p{
+    max-width: 450px;
+    display: inline-block;
+    font-size: 25px;
+    font-weight: bold;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: saddlebrown;
+    margin: 0;
+    position: relative;
+    bottom: 40px;
+}
+.s2 {
+    justify-content: space-between;
+    padding: 10px;
+    position: relative;
+    left: 180px;
+    top: 50px;
+    width: 80%;
+}
+.s2 img{
+    width: 250px;
+    height: 250px;
+    padding: 0;
+}
+.s3{
+    display: flex;
+    justify-content: space-between;
+    padding: 0px;
+    position: relative;
+    left: 250px;
+    top: 50px;
+    width: 80%;   
+}
+.s3 p{
+    max-width: 300px;
+    display: inline-block;
+    font-size: 15px;
+    font-weight: bold;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: saddlebrown;
+    padding: 0;
+    }
+
+.line{
+    position: relative;
+    left: 100px;
+    top: 50px;
+    font-weight: bold;
+}
+.name{
+    text-align: center;
+    font-size: 25px;
+    font-weight: 500;
+}
+
+.price{
+    justify-content: center;
+    text-align: center;
+    font-size: larger;
+    font-weight: 700;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.purchase{
+    background-color: lightgrey;
+    padding: 0;
+    text-align: center;
+}
+.purchase td{
+    width: fit-content;
+    height: 20px;
+}
+.preview td {
+    text-align: center;
+    font-size: larger;
+    font-weight: bolder;
+    color: black;
+    text-decoration: none;
+}
+.preview td:hover{
+    background-color: chocolate;
+}
+.purchase td a{
+    font-size: larger;
+    font-weight: bolder;
+    color: black;
+    text-decoration: none;
+}
+.purchase td:hover { 
+    background-color: chocolate;
+}
+.bod{
+    display: grid;
+    justify-content: space-between;
+    position: relative;
+    left: 140px;
+}
+.bod h3{
+    position: relative;
+}
+.bod div p {
+    position: relative;
+    max-width: 60%;
+    line-height: 25px;
+}
+.bod div ul {
+    position: relative;
+    max-width: 60%;
+}
