@@ -1,49 +1,84 @@
 <?php
-include_once 'Database_connection.php';
-class update_handler {
- private $conn; 
+require_once "Database_connection.php";
+?>
+<link rel="stylesheet" href="stylesheets/usercard.css">
+<?php
+class update extends Database_connection{
+    private $new_name;
+    private $new_password;
 
- public function __construct(){
-    $db = new Database_connetion();
-    $this ->conn = db.connect();
+    public function __construct($new_name,$new_password){
+        $this->new_name = $new_name;
+        $this->new_password = $new_password;
+    }
 
-public function handleUpdate(){
-     if(isset($_POST['upadate'])){
+    public function set_new_data(){
+        if ($_SESSION['usertype']=="Customer"){
+            session_start();
+            $uid = $_SESSION['UID'];
+            $db = new Database_connection();
+            $conn = $db->connect();
 
-        $id = $_POST['id'];
-        $name = $_POST['name'];
-        $email = $_POST['email']; 
-        
-        if($this->updateUser($id, $name, $email)){
-            echo "Update successful";
+            $query= "UPDATE users SET username = '$this->new_name' , password1 = '$this->new_password' WHERE UID = $uid";
+
+            $result = $conn->query($query);
+
+            if($result){
+                $_SESSION['name']=$this->new_name;
+                header("location:users.php");
+            }
+
+            else{
+                echo "
+                <a href='users.php'> 
+                    <div class='alert' style = 'background-color: pink'>
+                        <span class='closebtn' onclick='this.parentElement.style.display='none';'>&times;</span>
+                        Failed to update data.
+                    </div>
+                 </a>";
+            }
         }
-        else{
-            echo "Error updating user data";
-        }   
+        elseif ($_SESSION['usertype']=="Seller") {
+            session_start();
+            $sid = $_SESSION['SID'];
+            $conn = $this->connect();
+            $query= "UPDATE sellers SET username = '$this->new_name' , password1 = '$this->new_password' WHERE sid = $sid";
+
+            $result = $conn->query($query);
+
+            if($result){
+                $_SESSION['name']=$this->new_name;
+                header("location:users.php");
+            }
+
+            else{
+                echo "
+                <a href='users.php'> 
+                    <div class='alert' style = 'background-color: pink'>
+                        <span class='closebtn' onclick='this.parentElement.style.display='none';'>&times;</span>
+                        Failed to update data.
+                    </div>
+                 </a>";
+            }
+        }
     }
-
-    else{
-        echo "Error in request.";
-    }
- }
-
- private function updateUser($id, $name, $email){
-    
-    $holder = $conn ->preapare("UPDATE users name = ?, email = ?, WHERE id = ?");
-
-    $holder->bind_param("ssi", $name, $email, $id);
-
-    return $holder->execute();
-
- }
 }
 
+if($_SERVER['REQUEST_METHOD']=="POST"){
+    $new_name = $_POST['name'];
+    $new_password = $_POST['password'];
 
-
+$updateme = new update($new_name,$new_password);
+$updateme->set_new_data();
 }
 
-    
-   
-
-
+else{
+    echo "
+                <a href='users.php'> 
+                    <div class='alert' style = 'background-color: pink'>
+                        <span class='closebtn' onclick='this.parentElement.style.display='none';'>&times;</span>
+                        You have not filled the form.
+                    </div>
+                 </a>";
+}
 ?>

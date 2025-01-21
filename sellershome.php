@@ -65,7 +65,7 @@
              <span class="tooltip">Add Products</span>
           </li>  
           <li>
-            <a href="Addpattern.php">
+            <a href="Addpatterns.php">
                 <i class="bx bxs-notepad"></i>
                 <span class="side-item">Add Patterns</span>
             </a>

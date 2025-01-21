@@ -13,27 +13,29 @@ public function Validate_data($name,$email,$pass){
 
     if($result->num_rows > 0){
         session_start();
-        $_SESSION['name']= $name;
+        
         $_SESSION['usertype'] = "Customer";
         echo "<h2 align = 'center'>Log in succesful</h2>";
-        $get = "SELECT UID FROM users WHERE username = '$name'";
+        $get = "SELECT * FROM users WHERE username = '$name'";
         $res = $conn->query($get);
         $uid = $res->fetch_array();
         echo "Your User Id is ";
         $_SESSION['UID']=$uid[0];
+        $_SESSION['name']= $uid[1];
         echo $uid[0];
     }
     else{
         if($qry->num_rows > 0){
             session_start();
-            $_SESSION['name']= $name;
+            
             $_SESSION['usertype'] = "Seller";
             echo "<h2 align = 'center' >Welcome Back</h2>";
-            $get = "SELECT sid FROM sellers WHERE username = '$name'";
+            $get = "SELECT * FROM sellers WHERE username = '$name'";
             $res = $conn->query($get);
             $sid = $res->fetch_array();
             echo "Your Seller Id is ";
             $_SESSION['SID']=$sid[0];
+            $_SESSION['name']= $sid[1];
             echo $sid[0];
         }
     }
