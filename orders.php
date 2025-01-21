@@ -21,7 +21,6 @@ if(!$_SESSION){
     }
     else{
         ?>
-        
         <?php
     }
 }
