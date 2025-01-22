@@ -30,3 +30,6 @@ $result = $conn->query($query);
 
 </body>
 </html>
+<?php
+$conn->close();
+?>

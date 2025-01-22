@@ -3,6 +3,8 @@ require_once "Database_connection.php";
 
 class orders{
 
+    
+
 }
 session_start();
 if(!$_SESSION){
@@ -24,4 +26,5 @@ if(!$_SESSION){
         <?php
     }
 }
+
 ?>

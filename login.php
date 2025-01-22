@@ -23,6 +23,7 @@ public function Validate_data($name,$email,$pass){
         $_SESSION['UID']=$uid[0];
         $_SESSION['name']= $uid[1];
         echo $uid[0];
+        $conn->close();
     }
     else{
         if($qry->num_rows > 0){
@@ -37,6 +38,10 @@ public function Validate_data($name,$email,$pass){
             $_SESSION['SID']=$sid[0];
             $_SESSION['name']= $sid[1];
             echo $sid[0];
+            $conn->close();
+        }
+        else{
+            echo "<h2><strong>Log in failed. Incorrect Username or Password or Email. ";
         }
     }
 }

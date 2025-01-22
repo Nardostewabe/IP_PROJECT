@@ -24,7 +24,9 @@ class purchase extends Database_connection{
        $result = $conn->query($query);
 
        if($result){
+        $conn->close();
         header("location:orders.php");
+        exit();
        }
 
        else{
@@ -44,4 +46,5 @@ elseif(isset($_GET['name']) && isset($_GET['price'])){
 else{
         echo "Product Does not exist";
     }
+    
 ?>

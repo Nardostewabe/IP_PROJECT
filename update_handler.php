@@ -26,6 +26,7 @@ class update extends Database_connection{
             if($result){
                 $_SESSION['name']=$this->new_name;
                 header("location:users.php");
+                $conn->close();
             }
 
             else{
@@ -48,7 +49,9 @@ class update extends Database_connection{
 
             if($result){
                 $_SESSION['name']=$this->new_name;
+                $conn->close();
                 header("location:users.php");
+                exit();
             }
 
             else{

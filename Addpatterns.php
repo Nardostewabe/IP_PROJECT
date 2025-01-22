@@ -9,7 +9,7 @@
 </head>
 <body>  
 
-<form action="Pattern_handlers.php" method="post"> 
+<form action="Pattern_handler.php" method="post" enctype = "multipart/form-data"> 
     <fieldset>
         <legend>Add Pattern</legend>
     <label for="name">Enter Your Pattern's Name: </label>

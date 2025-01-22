@@ -18,7 +18,9 @@ class SignUp extends Database_connection{
         $result = $conn->query($query);
 
         if($result){
+            $conn->close();
             header("location: log.html");
+            exit();
         }
 
         else {
