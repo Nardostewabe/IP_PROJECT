@@ -44,7 +44,7 @@ $result = $conn->query($query);
 <script src="scripts/app.js"></script>
 </html>
 <?php
-$conn->close();
+
 }
 
 else{

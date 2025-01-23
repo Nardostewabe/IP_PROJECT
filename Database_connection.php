@@ -15,18 +15,15 @@ class Database_connection{
 
     public function connect(){
         $conn = new mysqli($this->servername,$this->username,$this->password,$this->database_name);
-
+        $conn->select_db('Myuser');
 
         if($conn->connect_error){
             die("Connection failed due to..".$conn->error);
         }
 
         else{
-            
                 return $conn;
         }
     }
 }
-// $connect = new Database_connection();
-// $conn = $connect->connect();
 ?>

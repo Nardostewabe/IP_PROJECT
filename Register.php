@@ -17,7 +17,7 @@ public function save_seller_data($name,$email,$pass){
     }
 
     else{
-        $conn->close();
+
         header("location:loginto.php");
         exit();
     }

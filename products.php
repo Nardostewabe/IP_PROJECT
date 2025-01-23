@@ -21,11 +21,12 @@ if ($category_id > 0) {
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
+            
             echo "<div class='product'>";
             echo "<img src='images/" . $row['image_url'] . "' alt='" . $row['product_name'] . "' style='width:150px; height:150px;'>";
             echo "<h3>" . $row['product_name'] . "</h3>";
             echo "<p>Price: " . $row['price'] . " ETB</p>";
-            echo "<a href='purchase.php?product_id=" . $row['id'] . "'>Purchase</a>";
+            echo "<a href='purchase.php?name=" . urlencode($row['product_name']) . "&price=" . urlencode($row['price']) . "'>Purchase</a>";
             echo "</div>";
         }
     } else {
@@ -35,5 +36,6 @@ if ($category_id > 0) {
     echo "<p>Invalid category selected.</p>";
 }
 
-$conn->close();
+
 ?>
+<link rel="stylesheet" href="stylesheets/prod_categ.css">

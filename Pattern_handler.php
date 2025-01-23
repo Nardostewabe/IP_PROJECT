@@ -1,7 +1,7 @@
 <?php
 require_once "Database_connection.php";
 
-class patterns extends Database_connection{
+class patterns extends Database_connection {
     private $name;
     private $price;
 
@@ -10,53 +10,45 @@ class patterns extends Database_connection{
         $this->price = $price;
     }
 
-    public function add_pattern(){
-        $db = new Database_connection();
-        $conn = $db->connect();
+    public function add_pattern() {
         session_start();
-        $pdf_url = $_FILES['pdf']['name'];
+
+        $conn = $this->connect();
+        
+        // Escape inputs to avoid SQL injection
+        $name = $conn->real_escape_string($this->name);
+        $price = (float) $this->price;
+        $pdf_url = $conn->real_escape_string($_FILES['pdf']['name']);
         $sid = $_SESSION['SID'];
 
-        $query = "INSERT INTO patterns (pat_name, pat_price, pat_image_url, sid) VALUES ('$this->name', $this->price, '$pdf_url', $sid)";
+        $query = "INSERT INTO patterns (pat_name, pat_price, pat_image_url, sid) 
+                  VALUES ('$name', $price, '$pdf_url', $sid)";
 
-        $result = $conn->query($query);
+        if ($conn->query($query)) {
+            // Move the file
+            $upload = "Patterns/";
+            $target_file = $upload . basename($_FILES['pdf']['name']);
+            move_uploaded_file($_FILES['pdf']['tmp_name'], $target_file);
 
-        if ($result) {
-            $conn->close();
+            // Redirect after successful insert
             header("location: categories.php");
-            exit();  // Ensure the script stops execution after redirection
+            exit();  // Make sure to stop script execution
         } else {
-            echo "
-            <a href='users.php'> 
-                <div class='alert' style='background-color: pink'>
-                    <span class='closebtn' onclick='this.parentElement.style.display=\"none\";'>&times;</span>
-                    Failed to Add pattern.
-                </div>
-             </a>";
+            echo "<div class='alert' style='background-color: pink'>Failed to Add Pattern</div>";
         }
+
     }
 }
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if (isset($_FILES['pdf']) && $_FILES['pdf']['error'] == 0) {
-        $upload = "Patterns/";
-        $target_file = $upload . basename($_FILES['pdf']['name']);
+        $name = $_POST['ptname'];
+        $price = $_POST['ptprice'];
 
-        if (move_uploaded_file($_FILES['pdf']['tmp_name'], $target_file)) {
-            // Only process if the file was successfully uploaded
-            $name = $_POST['ptname'];
-            $price = $_POST['ptprice'];
-
-            // Fix the class instantiation
-            $pattern = new patterns($name, $price);
-            $pattern->add_pattern();
-        } else {
-            echo "File upload failed.";
-        }
+        $pattern = new patterns($name, $price);
+        $pattern->add_pattern();
     } else {
         echo "No file uploaded or an error occurred.";
     }
-} else {
-    echo "Invalid request.";
 }
 ?>

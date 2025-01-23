@@ -13,8 +13,10 @@ class update extends Database_connection{
     }
 
     public function set_new_data(){
+        session_start();
+
         if ($_SESSION['usertype']=="Customer"){
-            session_start();
+            
             $uid = $_SESSION['UID'];
             $db = new Database_connection();
             $conn = $db->connect();
@@ -40,7 +42,6 @@ class update extends Database_connection{
             }
         }
         elseif ($_SESSION['usertype']=="Seller") {
-            session_start();
             $sid = $_SESSION['SID'];
             $conn = $this->connect();
             $query= "UPDATE sellers SET username = '$this->new_name' , password1 = '$this->new_password' WHERE sid = $sid";
@@ -49,7 +50,6 @@ class update extends Database_connection{
 
             if($result){
                 $_SESSION['name']=$this->new_name;
-                $conn->close();
                 header("location:users.php");
                 exit();
             }

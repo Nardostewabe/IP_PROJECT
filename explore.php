@@ -71,12 +71,19 @@
           <li>
             <a href="pattern.php">
                 <i class="bx bxs-notepad"></i>
+                <span class="side-item">Popular Patterns</span>
+            </a>
+             <span class="tooltip">Popular Patterns</span>
+          </li>
+          <li>
+            <a href="patterns.php">
+                <i class="bx bxs-notepad"></i>
                 <span class="side-item">Patterns</span>
             </a>
              <span class="tooltip">Patterns</span>
-          </li> 
+          </li>  
           <li>
-            <a href="orders.php">
+            <a href="Vieworders.php">
                 <i class="bx bxs-cart-alt"></i>
                 <span class="side-item">Order</span>
             </a>
