@@ -159,6 +159,8 @@ else{
                 echo "<h3>Your User Id is: ".$_SESSION['UID']."</h3>";
                 echo "<a href='seller.php'><h3>Become A Seller</h3></a>";
                 echo "<h4><a href='update.php'>Update Your Profile</a></h4>";
+                echo "<h4><a href='delete_account.php' style='color: red;'>Delete Account</a></h4>";
+
             }
             ?>
         </div>

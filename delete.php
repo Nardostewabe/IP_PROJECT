@@ -1,45 +1,76 @@
 <?php
 session_start();
-include("db_connection.php"); // Include your database connection
+require_once "Database_connection.php"; 
+class AccountDeletion {
+    private $conn;
+    private $userId;
+    private $userType;
 
-if (!$_SESSION) {
-    header("Location: loginto.php"); // Redirect to login if not logged in
-    exit();
+    public function __construct($dbConnection) {
+        $this->conn = $dbConnection;
+        
+        if (!isset($_SESSION['UID']) && !isset($_SESSION['SID'])) {
+            header("Location: loginto.php");
+            exit();
+        }
+
+        $this->userType = $_SESSION['usertype'];
+        $this->userId = ($this->userType == "Seller") ? $_SESSION['SID'] : $_SESSION['UID'];
+    }
+
+    public function deleteAccount() {
+        $table = ($this->userType == "Seller") ? "sellers" : "users";
+        $column = ($this->userType == "Seller") ? "sid" : "UID";
+
+        if (!$this->deleteOrders($column)) {
+            $this->showAlertAndRedirect("Failed to delete related orders.");
+            return;
+        }
+
+        $deleteUserQuery = "DELETE FROM $table WHERE $column = ?";
+        $stmtUser = $this->conn->prepare($deleteUserQuery);
+
+        if (!$stmtUser) {
+            $this->showAlertAndRedirect("Failed to prepare statement. Please try again.");
+            return;
+        }
+
+        $stmtUser->bind_param("i", $this->userId);
+
+        if ($stmtUser->execute()) {
+            $this->logout();
+        } else {
+            $this->showAlertAndRedirect("Failed to delete account. Please try again.");
+        }
+
+        $stmtUser->close();
+    }
+
+    private function deleteOrders($column) {
+        $deleteOrdersQuery = "DELETE FROM orders WHERE $column = ?";
+        $stmtOrders = $this->conn->prepare($deleteOrdersQuery);
+        $stmtOrders->bind_param("i", $this->userId);
+        $result = $stmtOrders->execute();
+        $stmtOrders->close();
+        return $result;
+    }
+
+    private function logout() {
+        session_unset();
+        session_destroy();
+        $this->showAlertAndRedirect("Account deleted successfully!", "loginto.php");
+    }
+
+    private function showAlertAndRedirect($message, $redirect = "javascript:window.history.back();") {
+        echo "<script>alert('$message'); window.location.href = '$redirect';</script>";
+    }
 }
 
-$userId = ($_SESSION['usertype'] == "Seller") ? $_SESSION['SID'] : $_SESSION['UID'];
-$userType = $_SESSION['usertype'];
 
-// Query to delete the user based on their usertype
-if ($userType == "Seller") {
-    $deleteQuery = "DELETE FROM sellers WHERE SID = ?";
-} else {
-    $deleteQuery = "DELETE FROM users WHERE UID = ?";
-}
+$database = new Database_connection();
+$conn = $database->connect();
 
-$stmt = $conn->prepare($deleteQuery);
-$stmt->bind_param("s", $userId);
+$accountDeletion = new AccountDeletion($conn);
+$accountDeletion->deleteAccount();
 
-if ($stmt->execute()) {
-    // Clear session and logout the user
-    session_unset();
-    session_destroy();
-    echo "<script>alert('Account deleted successfully!'); window.location.href = 'loginto.php';</script>";
-} else {
-    echo "<script>alert('Failed to delete account. Please try again.'); window.history.back();</script>";
-}
-?>
-
-<h4><a href="update.php">Update Your Profile</a></h4>
-<h4><a href="delete_account.php" onclick="return confirm('Are you sure you want to delete your account? This action cannot be undone.');" style="color: red;">Delete Account</a></h4><?php
-$servername = "localhost"; // Your server name
-$username = "root"; // Your database username
-$password = ""; // Your database password
-$dbname = "crochet"; // Your database name
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 ?>

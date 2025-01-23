@@ -71,77 +71,103 @@ p {
 require_once "Database_connection.php";
 session_start();
 
-$db = new Database_connection();
-$conn = $db->connect();
+class Orders {
+    private $conn;
+    private $uid;
+    private $user_role;
 
+    public function __construct($conn, $uid, $user_role) {
+        $this->conn = $conn;
+        $this->uid = $uid;
+        $this->user_role = $user_role;
+    }
+
+    public function fetchOrders() {
+        if ($this->user_role == 'Customer') {
+            $query = "SELECT OID, order_name, order_price, order_date FROM orders WHERE UID = ?";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bind_param("i", $this->uid);
+        } elseif ($this->user_role == 'Seller') {
+            $sid = $this->getSellerId();
+            if (!$sid) {
+                echo "You are not registered as a seller.";
+                return;
+            }
+            $query = "SELECT OID, UID, order_name, order_price, order_date FROM orders WHERE sid = ?";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bind_param("i", $sid);
+        } else {
+            echo "You have not made a purchase.";
+            return;
+        }
+
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            echo "<table border='1'>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Order Name</th>
+                        <th>Price</th>
+                        <th>Date</th>";
+            if ($this->user_role == 'Seller') {
+                echo "<th>Customer ID</th>";
+            } else {
+                echo "<th>Action</th>";
+            }
+            echo "</tr>";
+
+            while ($row = $result->fetch_assoc()) {
+                echo "<tr>
+                        <td>{$row['OID']}</td>
+                        <td>{$row['order_name']}</td>
+                        <td>{$row['order_price']} ETB</td>
+                        <td>{$row['order_date']}</td>";
+                if ($this->user_role == 'Seller') {
+                    echo "<td>{$row['UID']}</td>";
+                } else {
+                    echo "<td><a href='cancel_order.php?order_id={$row['OID']}'>Cancel</a></td>";
+                }
+                echo "</tr>";
+            }
+            echo "</table>";
+        } else {
+            echo "<p>No orders found.</p>";
+        }
+
+        $stmt->close();
+    }
+
+    private function getSellerId() {
+        $query = "SELECT sid FROM sellers WHERE UID = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("i", $this->uid);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($row = $result->fetch_assoc()) {
+            return $row['sid'];
+        }
+        return null;
+    }
+}
+
+// Ensure user is logged in
 if (!isset($_SESSION['UID'])) {
     header("Location: loginto.php");
     exit();
 }
+
+$db = new Database_connection();
+$conn = $db->connect();
 $uid = $_SESSION['UID'];
-$user_role = $_SESSION['usertype']; 
+$user_role = $_SESSION['usertype'];
 
 echo "<h1>Your Orders</h1>";
 
-if ($user_role == 'Customer') {
+$orders = new Orders($conn, $uid, $user_role);
+$orders->fetchOrders();
 
-    $query = "SELECT OID, order_name, order_price, order_date FROM orders WHERE UID = ?";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("i", $uid);
-} elseif ($user_role == 'Seller') {
-    $query = "SELECT OID, UID, order_name, order_price, order_date FROM orders WHERE sid = ?";
-    $stmt = $conn->prepare($query);
-
-    $sellerQuery = "SELECT sid FROM sellers WHERE UID = ?";
-    $sellerStmt = $conn->prepare($sellerQuery);
-    $sellerStmt->bind_param("i", $uid);
-    $sellerStmt->execute();
-    $sellerResult = $sellerStmt->get_result();
-    
-    if ($sellerRow = $sellerResult->fetch_assoc()) {
-        $sid = $sellerRow['sid'];
-    } else {
-        echo "You are not registered as a seller.";
-        exit();
-    }
-
-    $stmt->bind_param("i", $sid);
-} else {
-    echo "You have not made a purchase.";
-    exit();
-}
-
-$stmt->execute();
-$result = $stmt->get_result();
-
-if ($result->num_rows > 0) {
-    echo "<table border='1'>
-            <tr>
-                <th>Order ID</th>
-                <th>Order Name</th>
-                <th>Price</th>
-                <th>Date</th>";
-    if ($user_role == 'seller') {
-        echo "<th>Customer ID</th>";
-    }
-    echo "</tr>";
-
-    while ($row = $result->fetch_assoc()) {
-        echo "<tr>
-                <td>{$row['OID']}</td>
-                <td>{$row['order_name']}</td>
-                <td>{$row['order_price']} ETB</td>
-                <td>{$row['order_date']}</td>";
-        if ($user_role == 'seller') {
-            echo "<td>{$row['UID']}</td>";
-        }
-        echo "</tr>";
-    }
-    echo "</table>";
-} else {
-    echo "<p>No orders found.</p>";
-}
-
-$stmt->close();
 $conn->close();
 ?>
+
