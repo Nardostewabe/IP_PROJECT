@@ -1,0 +1,46 @@
+import mysql.connector
+
+# Function to delete account
+def delete_account(account_type, account_id):
+    try:
+        # Connect to the database
+        db = mysql.connector.connect(
+            host="localhost",
+            user="root",  # Replace with your database username
+            password="yourpassword",  # Replace with your database password
+            database="yourdatabase"  # Replace with your database name
+        )
+        cursor = db.cursor()
+
+        # Determine the table and prepare query
+        if account_type == "user":
+            query = "DELETE FROM users WHERE user_id = %s"
+        elif account_type == "seller":
+            query = "DELETE FROM sellers WHERE seller_id = %s"
+        else:
+            return "Invalid account type"
+
+        # Execute the query
+        cursor.execute(query, (account_id,))
+        db.commit()
+
+        return "Account deleted successfully"
+
+    except Exception as e:
+        return f"Error: {e}"
+
+    finally:
+        # Close the database connection
+        if db.is_connected():
+            cursor.close()
+            db.close()
+
+# Example usage
+if name == "main":
+    # Input account type and ID
+    account_type = input("Enter account type (user/seller): ").strip().lower()
+    account_id = input("Enter account ID: ").strip()
+
+    # Call the delete_account function
+    result = delete_account(account_type, account_id)
+    print(result)
