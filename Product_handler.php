@@ -43,6 +43,15 @@ class products extends Database_connection {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
+
+    $checker = new Checker();
+    $file = $_FILES['picture'];
+    $validation_result = $checker->pic_validate($file);
+    if($validation_result !== true){
+        echo $validation_result;
+        exit();    
+    }
+
     $name = $_POST['pdname'];
     $price = $_POST['pdprice'];
     $cat_id = $_POST['category_id'];

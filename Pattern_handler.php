@@ -1,5 +1,6 @@
 <?php
 require_once "Database_connection.php";
+require_once "Checker.php";
 
 class patterns extends Database_connection {
     private $name;
@@ -41,6 +42,15 @@ class patterns extends Database_connection {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
+
+    $checker = new Checker();
+    $file = $_FILES['pdf'];
+    $validation_result = $checker->pdf_validate($file);
+    if($validation_result !== true){
+        echo $validation_result;
+        exit();    
+    }
+
     if (isset($_FILES['pdf']) && $_FILES['pdf']['error'] == 0) {
         $name = $_POST['ptname'];
         $price = $_POST['ptprice'];
