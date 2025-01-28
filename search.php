@@ -1,8 +1,3 @@
-<form action="search.php" method="GET">
-    <input type="text" name="search" placeholder="Search for a pattern or product" required>
-    <button type="submit">Search</button>
-</form>
-
 <?php
 require_once('Database_connection.php');
     
