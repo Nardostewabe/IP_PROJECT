@@ -1,5 +1,6 @@
 <?php
 require_once "Database_connection.php";
+require_once "Checker.php";
 
 class products extends Database_connection {
     private $name;
@@ -17,25 +18,22 @@ class products extends Database_connection {
 
         $conn = $this->connect();
 
-        // Escape inputs to avoid SQL injection
         $name = $conn->real_escape_string($this->name);
         $price = (float) $this->price;
         $cat_id = (int) $this->cat_id;
         $pic_url = $conn->real_escape_string($_FILES['picture']['name']);
-        $sid = isset($_SESSION['SID']) ? $_SESSION['SID'] : 0;
+        $sid = $_SESSION['SID'];
 
         $query = "INSERT INTO products (product_name, price, image_url, cat_id, sid) 
                   VALUES ('$name', $price, '$pic_url', $cat_id, $sid)";
 
         if ($conn->query($query)) {
-            // Move the file
             $upload = "images/";
-            $target_file = $upload . basename($_FILES['picture']['name']);
+            $target_file = $upload.basename($_FILES['picture']['name']);
             move_uploaded_file($_FILES['picture']['tmp_name'], $target_file);
 
-            // Redirect after successful insert
-            header("location: categories.php");
-            exit();  // Make sure to stop script execution
+            header("location: sellershome.php");
+            exit();
         } else {
             echo "<div class='alert' style='background-color: pink'>Failed to Add Product</div>";
         }
@@ -47,6 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $checker = new Checker();
     $file = $_FILES['picture'];
     $validation_result = $checker->pic_validate($file);
+
     if($validation_result !== true){
         echo $validation_result;
         exit();    

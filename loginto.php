@@ -142,7 +142,7 @@ iframe{
         </div>
     </div>
     <div class="log">
-        <iframe src="temp.html" frameborder="0">
+        <iframe id = "troublesomeFrame" src="temp.html" frameborder="0">
     </div>
     <footer>
         <div class="footercontainer">

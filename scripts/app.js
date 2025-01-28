@@ -36,6 +36,8 @@ function g(){
     }
 }
 
+document.getElementById('troublesomeFrame').contentDocument.location.reload(true);
+
 
 
 

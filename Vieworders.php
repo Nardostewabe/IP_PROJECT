@@ -71,7 +71,7 @@ p {
 require_once "Database_connection.php";
 session_start();
 
-class Orders {
+class Orders extends Database_connection {
     private $conn;
     private $uid;
     private $user_role;
@@ -151,21 +151,30 @@ class Orders {
         return null;
     }
 }
-
-// Ensure user is logged in
-if (!isset($_SESSION['UID'])) {
+if (!$_SESSION) {
     header("Location: loginto.php");
     exit();
 }
 
-$db = new Database_connection();
-$conn = $db->connect();
-$uid = $_SESSION['UID'];
+$user_role = $_SESSION['usertype'];
+if ($_SESSION['usertype'] = "Customer"){
+    $uid = $_SESSION['UID'];
+}
+elseif($_SESSION['usertype']= "Seller"){
+    $uid = $_SESSION['SID'];
+}
+
+else{
+    echo "<p>Invalid User Type</p>";
+}
+
 $user_role = $_SESSION['usertype'];
 
 echo "<h1>Your Orders</h1>";
 
-$orders = new Orders($conn, $uid, $user_role);
+$db = new Database_connection();
+$conn = $db->connect();
+$orders = new Orders( $conn,$uid, $user_role);
 $orders->fetchOrders();
 
 $conn->close();

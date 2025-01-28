@@ -16,24 +16,21 @@ class patterns extends Database_connection {
 
         $conn = $this->connect();
         
-        // Escape inputs to avoid SQL injection
         $name = $conn->real_escape_string($this->name);
         $price = (float) $this->price;
         $pdf_url = $conn->real_escape_string($_FILES['pdf']['name']);
         $sid = $_SESSION['SID'];
 
-        $query = "INSERT INTO patterns (pat_name, pat_price, pat_image_url, sid) 
+        $query = "INSERT INTO patterns (pat_name, pat_price, pat_pdf_url, sid) 
                   VALUES ('$name', $price, '$pdf_url', $sid)";
 
         if ($conn->query($query)) {
-            // Move the file
+           
             $upload = "Patterns/";
             $target_file = $upload . basename($_FILES['pdf']['name']);
             move_uploaded_file($_FILES['pdf']['tmp_name'], $target_file);
-
-            // Redirect after successful insert
-            header("location: categories.php");
-            exit();  // Make sure to stop script execution
+            header("location: sellershome.php");
+            exit(); 
         } else {
             echo "<div class='alert' style='background-color: pink'>Failed to Add Pattern</div>";
         }

@@ -73,59 +73,6 @@
             </ul>
         </div>
     </nav>
-    <div class="sidebar">
-        <div class="top">
-            <i class="bx bx-menu" id="btn"></i>
-        </div> 
-        <ul>
-            <li>
-                <a href="users.php">
-                    <i class="bx bx-user"></i>
-                    <span class="side-item">user</span>
-                </a>
-                <span class="tooltip">User</span>
-              </li>    
-          <li>
-            <a href="categories.php">
-                <i class="bx bx-list-ul"></i>
-                <span class="side-item">Products</span>
-            </a>
-             <span class="tooltip">Products</span>
-          </li>  
-          <li>
-            <a href="pattern.php">
-                <i class="bx bxs-notepad"></i>
-                <span class="side-item">Popular Patterns</span>
-            </a>
-             <span class="tooltip">Popular Patterns</span>
-          </li>
-          <li>
-            <a href="patterns.php">
-                <i class="bx bxs-notepad"></i>
-                <span class="side-item">Patterns</span>
-            </a>
-             <span class="tooltip">Patterns</span>
-          </li>  
-          <li>
-            <a href="Vieworders.php">
-                <i class="bx bxs-cart-alt"></i>
-                <span class="side-item">Order</span>
-            </a>
-             <span class="tooltip">Order</span>
-          </li>     
-        </ul>
-        <div class="profile_content">
-            <div class="profile">
-                <div class="profile_details">
-                    <img src="images\profile.png" alt=" ">
-                    <div class="name_job">
-                        <div class="name" name = "uname" id="names"><?php echo $_SESSION['name'];?></div>
-                    </div>
-                </div>
-                <a href="logout.php"><i class="bx bx-log-out" id="logout"></i></a>
-            </div>
-        </div>
-    </div>
 <?php
 if(!$_SESSION){
     ?>
@@ -153,13 +100,15 @@ else{
             if($_SESSION['usertype']=="Seller"){
                 echo "<h3>Your Seller Id is: ".$_SESSION['SID']."</h3>";
                 echo "<h4><a href='update.php'>Update Your Profile</a></h4>";
+                echo "<h4><a href='delete.php' style='color: red;'>Delete Account</a></h4>";
+
             }
 
             elseif($_SESSION['usertype']=="Customer"){
                 echo "<h3>Your User Id is: ".$_SESSION['UID']."</h3>";
                 echo "<a href='seller.php'><h3>Become A Seller</h3></a>";
                 echo "<h4><a href='update.php'>Update Your Profile</a></h4>";
-                echo "<h4><a href='delete_account.php' style='color: red;'>Delete Account</a></h4>";
+                echo "<h4><a href='delete.php' style='color: red;'>Delete Account</a></h4>";
 
             }
             ?>
