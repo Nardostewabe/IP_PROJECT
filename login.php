@@ -24,6 +24,7 @@ public function Validate_data($name,$email,$pass){
         $_SESSION['UID']=$uid[0];
         $_SESSION['name']= $uid[1];
         echo $uid[0];
+        echo "<script type='text/javascript'>onclick='window.location.reload(true);'</script>"
         
     }
     else{
@@ -38,6 +39,7 @@ public function Validate_data($name,$email,$pass){
             $_SESSION['SID']=$sid[0];
             $_SESSION['name']= $sid[1];
             echo $sid[0];
+            echo "<script type='text/javascript'>onclick='window.location.reload(true);'</script>"
             
         }
         else{
