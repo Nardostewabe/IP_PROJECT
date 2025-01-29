@@ -35,7 +35,7 @@
                         </li>
                         <li>
                             <div class='search'>
-                                <form >
+                                <form action = 'SearchHandler.php' method = 'POST' >
                                     <input type='search' placeholder='Search for items'>
                                     <button type='submit'>Go</button>
                                 </form>
