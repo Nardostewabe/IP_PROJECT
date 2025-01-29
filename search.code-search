@@ -1,0 +1,112 @@
+# Query: search
+# Flags: CaseSensitive WordMatch
+# ContextLines: 1
+
+31 results - 8 files
+
+About.php:
+  42                          <li>
+  43:                             <div class='search'>
+  44                                  <form action = "SearchHandler.php" method = "POST">
+  45:                                     <input type='search' placeholder='Search for items'>
+  46                                      <button type='submit'>Go</button>
+
+  63                          <li>
+  64:                             <div class='search'>
+  65                                  <form action = "SearchHandler.php" method = "POST">
+  66:                                     <input type='search' placeholder='Search for items'>
+  67                                      <button type='submit'>Go</button>
+
+explore.php:
+  41                  <li>
+  42:                     <div class="search">
+  43                          <form action = "SearchHandler.php" method = "POST" >
+  44:                             <input type="search" placeholder="Search for items">
+  45                              <button type="submit">Go</button>
+
+home.php:
+  36                          <li>
+  37:                             <div class='search'>
+  38                                  <form action = "SearchHandler.php" method = "POST" >
+  39:                                     <input type='search' placeholder='Search for items'>
+  40                                      <button type='submit'>Go</button>
+
+  57                          <li>
+  58:                             <div class='search'>
+  59                                  <form action = "SearchHandler.php" method = "POST" >
+  60:                                     <input type='search' placeholder='Search for items'>
+  61                                      <button type='submit'>Go</button>
+
+loginto.php:
+  51                          <li>
+  52:                             <div class='search'>
+  53                                  <form action = "SearchHandler.php" method = "POST" >
+  54:                                     <input type='search' placeholder='Search for items'>
+  55                                      <button type='submit'>Go</button>
+
+  72                          <li>
+  73:                             <div class='search'>
+  74                                  <form >
+  75:                                     <input type='search' placeholder='Search for items'>
+  76                                      <button type='submit'>Go</button>
+
+pattern.php:
+  41                  <li>
+  42:                     <div class="search">
+  43                          <form action = "SearchHandler.php" method = "POST" >
+  44:                             <input type="search" placeholder="Search for items">
+  45                              <button type="submit">Go</button>
+
+sideNnav.php:
+  36                          <li>
+  37:                             <div class='search'>
+  38                                  <form action = "SearchHandler.php" method = "POST" >
+  39:                                     <input type='search' placeholder='Search for items'>
+  40                                      <button type='submit'>Go</button>
+
+  57                          <li>
+  58:                             <div class='search'>
+  59                                  <form >
+  60:                                     <input type='search' placeholder='Search for items'>
+  61                                      <button type='submit'>Go</button>
+
+users.php:
+  36                          <li>
+  37:                             <div class='search'>
+  38                                  <form action = "SearchHandler.php" method = "POST" >
+  39:                                     <input type='search' placeholder='Search for items'>
+  40                                      <button type='submit'>Go</button>
+
+  57                          <li>
+  58:                             <div class='search'>
+  59                                  <form action = "SearchHandler.php" method = "POST" >
+  60:                                     <input type='search' placeholder='Search for items'>
+  61                                      <button type='submit'>Go</button>
+
+stylesheets\style.css:
+   82  }
+   83: .search{
+   84      display: flex;
+
+   87  }
+   88: .search form{
+   89      display:flex;
+
+   91  }
+   92: .search input{
+   93      padding: 10px;
+
+   99  }
+  100: .search input:hover{
+  101      border: 1px solid #72a0d4;
+  102  }
+  103: .search button{
+  104      padding: 10px;
+
+  131  }
+  132: .search button:hover{
+  133      background-color: #ccc;
+
+  215  }
+  216: .search{
+  217      text-align: center;

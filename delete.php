@@ -1,57 +1,102 @@
 <?php
 session_start();
 require_once "Database_connection.php"; 
+
 class AccountDeletion {
     private $conn;
     private $userId;
     private $userType;
+    private $sellerId;
 
     public function __construct($dbConnection) {
         $this->conn = $dbConnection;
-        
+
         if (!isset($_SESSION['UID']) && !isset($_SESSION['SID'])) {
             header("Location: loginto.php");
             exit();
         }
 
         $this->userType = $_SESSION['usertype'];
-        $this->userId = ($this->userType == "Seller") ? $_SESSION['SID'] : $_SESSION['UID'];
+        $this->userId = isset($_SESSION['UID']) ? $_SESSION['UID'] : null;
+        $this->sellerId = isset($_SESSION['SID']) ? $_SESSION['SID'] : null;
+
+        if ($this->userType == "Seller" && !$this->sellerId) {
+            $this->showAlertAndRedirect("Invalid seller account.");
+            exit();
+        }
     }
 
     public function deleteAccount() {
-        $table = ($this->userType == "Seller") ? "sellers" : "users";
-        $column = ($this->userType == "Seller") ? "sid" : "UID";
-
-        if (!$this->deleteOrders($column)) {
-            $this->showAlertAndRedirect("Failed to delete related orders.");
-            return;
+        if ($this->userType == "Seller") {
+            $this->deleteSellerData();
+        } elseif($this->userType == "Customer") {
+            $this->deleteCustomerData();
         }
-
-        $deleteUserQuery = "DELETE FROM $table WHERE $column = ?";
-        $stmtUser = $this->conn->prepare($deleteUserQuery);
-
-        if (!$stmtUser) {
-            $this->showAlertAndRedirect("Failed to prepare statement. Please try again.");
-            return;
+        else{
+            $this->showAlertAndRedirect("Invalid Users");
         }
-
-        $stmtUser->bind_param("i", $this->userId);
-
-        if ($stmtUser->execute()) {
-            $this->logout();
-        } else {
-            $this->showAlertAndRedirect("Failed to delete account. Please try again.");
-        }
-
-        $stmtUser->close();
+        $this->logout();
     }
 
-    private function deleteOrders($column) {
-        $deleteOrdersQuery = "DELETE FROM orders WHERE $column = ?";
-        $stmtOrders = $this->conn->prepare($deleteOrdersQuery);
-        $stmtOrders->bind_param("i", $this->userId);
-        $result = $stmtOrders->execute();
-        $stmtOrders->close();
+    private function deleteSellerData() {
+        
+        if (!$this->deleteRelatedRecords("orders", "sid", $this->sellerId)) {
+            $this->showAlertAndRedirect("Failed to delete orders.");
+            return;
+        }
+
+        
+        if (!$this->deleteRelatedRecords("products", "sid", $this->sellerId)) {
+            $this->showAlertAndRedirect("Failed to delete products.");
+            return;
+        }
+
+        
+        if (!$this->deleteRelatedRecords("patterns", "sid", $this->sellerId)) {
+            $this->showAlertAndRedirect("Failed to delete patterns.");
+            return;
+        }
+
+        
+        if (!$this->deleteUser("sellers", "sid", $this->sellerId)) {
+            $this->showAlertAndRedirect("Failed to delete seller account.");
+            return;
+        }
+    }
+
+    private function deleteCustomerData() {
+        
+        if (!$this->deleteRelatedRecords("orders", "UID", $this->userId)) {
+            $this->showAlertAndRedirect("Failed to delete orders.");
+            return;
+        }
+
+        
+        if (!$this->deleteUser("users", "UID", $this->userId)) {
+            $this->showAlertAndRedirect("Failed to delete customer account.");
+            return;
+        }
+    }
+
+    private function deleteRelatedRecords($table, $column, $id) {
+        $query = "DELETE FROM $table WHERE $column = ?";
+        $stmt = $this->conn->prepare($query);
+        if (!$stmt) return false;
+
+        $stmt->bind_param("i", $id);
+        $result = $stmt->execute();
+        $stmt->close();
+        return $result;
+    }
+
+    private function deleteUser($table, $column, $id) {
+        $query = "DELETE FROM $table WHERE $column = ?";
+        $stmt = $this->conn->prepare($query);
+        if (!$stmt) return false;
+
+        $stmt->bind_param("i", $id);
+        $result = $stmt->execute();
+        $stmt->close();
         return $result;
     }
 
@@ -66,11 +111,9 @@ class AccountDeletion {
     }
 }
 
-
 $database = new Database_connection();
 $conn = $database->connect();
 
 $accountDeletion = new AccountDeletion($conn);
 $accountDeletion->deleteAccount();
-
 ?>
