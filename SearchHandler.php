@@ -7,63 +7,79 @@ class SearchHandler {
 
     public function __construct($conn, $searchQuery) {
         $this->conn = $conn;
-        $this->searchQuery = mysqli_real_escape_string($conn, $searchQuery); // Sanitize the input
+        $this->searchQuery = $searchQuery;
     }
 
     public function searchProducts() {
-        $query = "SELECT * FROM products WHERE product_name LIKE ? OR description LIKE ?";
+        
+        $query = "SELECT * FROM products WHERE product_name LIKE ?";
         $stmt = $this->conn->prepare($query);
         $searchTerm = "%" . $this->searchQuery . "%";
-        $stmt->bind_param("ss", $searchTerm, $searchTerm);
+        $stmt->bind_param("s", $searchTerm);
         $stmt->execute();
         $result = $stmt->get_result();
         return $result;
     }
 
     public function searchPatterns() {
-        $query = "SELECT * FROM patterns WHERE pattern_name LIKE ? OR description LIKE ?";
+        
+        $query = "SELECT * FROM patterns WHERE pat_name LIKE ?";
         $stmt = $this->conn->prepare($query);
         $searchTerm = "%" . $this->searchQuery . "%";
-        $stmt->bind_param("ss", $searchTerm, $searchTerm);
+        $stmt->bind_param("s", $searchTerm);
         $stmt->execute();
         $result = $stmt->get_result();
         return $result;
     }
 
-    public function displayResults($results) {
-        if (mysqli_num_rows($results) > 0) {
-            while ($row = mysqli_fetch_assoc($results)) {
-                echo "<li><a href='" . $row['link'] . "'>" . $row['name'] . "</a> - " . $row['description'] . "</li>";
+    public function displayResults($results, $type) {
+       
+        if ($results->num_rows > 0) {
+            while ($row = $results->fetch_assoc()) {
+                if ($type == 'product') {
+                    echo "<li><a href='products.php?category_id=" . $row['cat_id']. "'>" . $row['product_name'] . "</a></li>";
+                } elseif ($type == 'pattern') {
+                    echo "<li><a href='patterns.php'>" . $row['pat_name'] . "</a></li>";
+                }
             }
         } else {
-            echo "No products or patterns found for '" . $this->searchQuery . "'.";
+            echo "No $type found for '" . $this->searchQuery . "'.";
         }
     }
 }
+
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+   
+    $db = new Database_connection();
+    $conn = $db->connect();
+    
+
     $searchQuery = $_POST['searchQuery'];
 
     $searchHandler = new SearchHandler($conn, $searchQuery);
 
-    
+
     $productResults = $searchHandler->searchProducts();
+
     $patternResults = $searchHandler->searchPatterns();
 
-    
-    if (mysqli_num_rows($productResults) > 0) {
+
+    if ($productResults->num_rows > 0) {
         echo "<h2>Product Results for '$searchQuery'</h2><ul>";
-        $searchHandler->displayResults($productResults);
+        $searchHandler->displayResults($productResults, 'product');
         echo "</ul>";
     }
 
-    if (mysqli_num_rows($patternResults) > 0) {
+    if ($patternResults->num_rows > 0) {
         echo "<h2>Pattern Results for '$searchQuery'</h2><ul>";
-        $searchHandler->displayResults($patternResults);
+        $searchHandler->displayResults($patternResults, 'pattern');
         echo "</ul>";
     }
 
-    if (mysqli_num_rows($productResults) == 0 && mysqli_num_rows($patternResults) == 0) {
+
+    if ($productResults->num_rows == 0 && $patternResults->num_rows == 0) {
         echo "No products or patterns found for '$searchQuery'.";
     }
 }
-
+?>

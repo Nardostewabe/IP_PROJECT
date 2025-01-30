@@ -1,10 +1,9 @@
 <?php
-// Include database connection
+
 require_once('Database_connection.php');
 $db = new Database_connection();
 $conn = $db->connect();
 
-// Fetch all categories
 $query = "SELECT * FROM categories";
 $result = $conn->query($query);
 ?>

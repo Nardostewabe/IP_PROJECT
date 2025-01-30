@@ -15,12 +15,10 @@ public function save_seller_data($name,$email,$pass){
     if(!$result){
         echo "Sign Up failed,<a href='seller.php'>try again..</a>";
     }
-
     else{
-
         header("location:loginto.php");
         exit();
-    }
+    } 
 }
 }
 if($_SERVER['REQUEST_METHOD']=="POST"){

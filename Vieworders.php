@@ -88,7 +88,7 @@ class Orders extends Database_connection {
             $stmt = $this->conn->prepare($query);
             $stmt->bind_param("i", $this->uid);
         } elseif ($this->user_role == 'Seller') {
-            $sid = $this->getSellerId();
+            $sid = $this->uid;
             if (!$sid) {
                 echo "You are not registered as a seller.";
                 return;
@@ -138,29 +138,16 @@ class Orders extends Database_connection {
 
         $stmt->close();
     }
-
-    private function getSellerId() {
-        $query = "SELECT sid FROM sellers WHERE UID = ?";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("i", $this->uid);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        if ($row = $result->fetch_assoc()) {
-            return $row['sid'];
-        }
-        return null;
-    }
 }
 if (!$_SESSION) {
     header("Location: loginto.php");
     exit();
 }
 
-$user_role = $_SESSION['usertype'];
-if ($_SESSION['usertype'] = "Customer"){
+if ($_SESSION['usertype'] == "Customer"){
     $uid = $_SESSION['UID'];
 }
-elseif($_SESSION['usertype']= "Seller"){
+elseif($_SESSION['usertype']== "Seller"){
     $uid = $_SESSION['SID'];
 }
 

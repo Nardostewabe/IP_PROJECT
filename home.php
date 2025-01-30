@@ -57,7 +57,7 @@
                         <li>
                             <div class='search'>
                                 <form action = 'SearchHandler.php' method = 'POST'>
-                                    <input type='search' placeholder='Search for items'>
+                                    <input type='text' placeholder='Search for items' name = 'searchQuery'>
                                     <button type='submit'>Go</button>
                                 </form>
                             </div>
