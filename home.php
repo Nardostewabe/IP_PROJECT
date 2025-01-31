@@ -125,7 +125,7 @@
                         }?></div>
                     </div>
                 </div>
-                <a href="logout.php"><i class="bx bx-log-out" id="logout"></i></a>
+                <a href="LogOutControl.php"><i class="bx bx-log-out" id="logout"></i></a>
             </div>
         </div>
     </div>

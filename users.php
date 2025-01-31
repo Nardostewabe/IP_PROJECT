@@ -92,7 +92,7 @@ else{
 ?>
     <div class="container">
         <div class="profile-box">
-        <h3 id="logout"><a href="logout.php"><i class="bx bx-log-out"></i>LOG OUT</a></h3>
+        <h3 id="logout"><a href="LogOutControl.php"><i class="bx bx-log-out"></i>LOG OUT</a></h3>
             <img src="images\profile.png" class="profile-pic">
             <h1><?php echo $_SESSION['name'];?></h1>
             <h2><?php echo $_SESSION['usertype'];?></h2>
@@ -103,7 +103,6 @@ else{
                 echo "<h4><a href='delete.php' style='color: red;'>Delete Account</a></h4>";
 
             }
-
             elseif($_SESSION['usertype']=="Customer"){
                 echo "<h3>Your User Id is: ".$_SESSION['UID']."</h3>";
                 echo "<a href='seller.php'><h3>Become A Seller</h3></a>";

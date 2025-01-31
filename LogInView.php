@@ -140,13 +140,13 @@ form fieldset{
                         <div class="name" name = "uname" id="names">Username</div>
                     </div>
                 </div>
-                <a href="logout.php"><i class="bx bx-log-out" id="logout"></i></a>
+                <a href="LogOutControl.php"><i class="bx bx-log-out" id="logout"></i></a>
             </div>
         </div>
     </div>
     <div class="log">
    
-<form action="login.php" method="post"> 
+<form action="LogInController.php" method="post"> 
     <fieldset>
             <p style = "font-size: 25px;">Log In</p> 
             <div><input type="text" name="name" placeholder="Name" class = "Logger" id="inp"> </div><br>

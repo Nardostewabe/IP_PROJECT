@@ -1,11 +1,8 @@
 <?php
+require_once('CategoriesModel.php');
 
-require_once('Database_connection.php');
-$db = new Database_connection();
-$conn = $db->connect();
-
-$query = "SELECT * FROM categories";
-$result = $conn->query($query);
+$categoryModel = new CategoryModel();
+$categories = $categoryModel->getCategories();
 ?>
 
 <!DOCTYPE html>
@@ -20,15 +17,10 @@ $result = $conn->query($query);
 
 <h2>Product Categories</h2>
 <ul>
-    <?php
-    while ($row = $result->fetch_assoc()) {
-        echo "<li><a href='products.php?category_id=" . $row['id'] . "'>" . $row['category_name'] . "</a></li>";
-    }
-    ?>
+    <?php while ($row = $categories->fetch_assoc()) : ?>
+        <li><a href="products.php?category_id=<?php echo $row['id']; ?>"><?php echo $row['category_name']; ?></a></li>
+    <?php endwhile; ?>
 </ul>
 
 </body>
 </html>
-<?php
-$conn->close();
-?>

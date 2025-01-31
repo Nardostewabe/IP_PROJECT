@@ -127,7 +127,7 @@ class Orders extends Database_connection {
                 if ($this->user_role == 'Seller') {
                     echo "<td>{$row['UID']}</td>";
                 } else {
-                    echo "<td><a href='cancel_order.php?order_id={$row['OID']}'>Cancel</a></td>";
+                    echo "<td><a href='OrderController.php?order_id={$row['OID']}'>Cancel</a></td>";
                 }
                 echo "</tr>";
             }
