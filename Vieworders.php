@@ -140,7 +140,7 @@ class Orders extends Database_connection {
     }
 }
 if (!$_SESSION) {
-    header("Location: loginto.php");
+    header("Location: SignUpView.php");
     exit();
 }
 

@@ -38,7 +38,7 @@
                 if (!$_SESSION){
                     echo "
                 <li class='navbar__btn'>
-                    <a href='loginto.php' class='button'>Sign Up</a>
+                    <a href='SignUpView.php' class='button'>Sign Up</a>
                 </li>
                 <li>
                 ";}?>

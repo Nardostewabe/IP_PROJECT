@@ -31,7 +31,7 @@
                             <a href='explore.php' class='navbar__link'>Explore</a>
                         </li>
                         <li class='navbar__btn'>
-                            <a href='loginto.php' class='button'>Sign Up</a>
+                            <a href='SignUpView.php' class='button'>Sign Up</a>
                         </li>
                         <li>
                             <div class='search'>
@@ -78,7 +78,7 @@ if(!$_SESSION){
     ?>
     
 
-<a href="loginto.php"> 
+<a href="SignUpView.php"> 
     <div class="alert" style = "background-color: pink">
   <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
   You have not logged in.

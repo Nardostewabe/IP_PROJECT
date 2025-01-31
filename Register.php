@@ -16,7 +16,7 @@ public function save_seller_data($name,$email,$pass){
         echo "Sign Up failed,<a href='seller.php'>try again..</a>";
     }
     else{
-        header("location:loginto.php");
+        header("location:SignUpView.php");
         exit();
     } 
 }

@@ -27,7 +27,7 @@ class CancelOrder {
 }
 
 if (!isset($_SESSION['UID'])) {
-    header("Location: loginto.php");
+    header("Location: SignUpView.php");
     exit();
 }
 

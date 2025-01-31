@@ -12,7 +12,7 @@ class AccountDeletion {
         $this->conn = $dbConnection;
 
         if (!isset($_SESSION['UID']) && !isset($_SESSION['SID'])) {
-            header("Location: loginto.php");
+            header("Location: SignUpView.php");
             exit();
         }
 
@@ -103,7 +103,7 @@ class AccountDeletion {
     private function logout() {
         session_unset();
         session_destroy();
-        $this->showAlertAndRedirect("Account deleted successfully!", "loginto.php");
+        $this->showAlertAndRedirect("Account deleted successfully!", "SignUpView.php");
     }
 
     private function showAlertAndRedirect($message, $redirect = "javascript:window.history.back();") {

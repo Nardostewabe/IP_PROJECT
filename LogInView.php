@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="stylesheets/footer.css">
 </head>
 <style>
-    .log iframe{
+    .log {
     justify-content: center;
     background: lightpink;
     position: relative;
@@ -19,10 +19,13 @@
     width: 400px;
     height: 500px;
     margin: 0 auto;
-}
-iframe{
     display: flex;
 }
+
+form fieldset{
+    border: none;
+}
+
 </style>
 <script src="scripts\app.js"></script>
 <body background="images/yarnstuff.jpg">
@@ -46,7 +49,7 @@ iframe{
                             <a href='explore.php' class='navbar__link'>Explore</a>
                         </li>
                         <li class='navbar__btn'>
-                            <a href='loginto.php' class='button'>Sign Up</a>
+                            <a href='SignUpView.php' class='button'>Sign Up</a>
                         </li>
                         <li>
                             <div class='search'>
@@ -142,7 +145,17 @@ iframe{
         </div>
     </div>
     <div class="log">
-        <iframe id = "troublesomeFrame" src="temp.html" frameborder="0">
+   
+<form action="login.php" method="post"> 
+    <fieldset>
+            <p style = "font-size: 25px;">Log In</p> 
+            <div><input type="text" name="name" placeholder="Name" class = "Logger" id="inp"> </div><br>
+            <div><input type="Email" name="email" placeholder="Email" class = "Logger" id="inp"> </div><br>
+            <div><input type="password" name="password" placeholder="Password" class = "Logger" id="pass" onfocus="f()"></div><br>
+            <div class="msg"></div>
+            <div><input type="Submit" name="login" value = "Log in" class = "Logger-button" ></div>
+    </fieldset>
+</form>
     </div>
     <footer>
         <div class="footercontainer">

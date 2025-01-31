@@ -16,11 +16,10 @@ public function Validate_data($name,$email,$pass){
         
         
         $_SESSION['usertype'] = "Customer";
-        echo "<h2 align = 'center'>Log in succesful</h2>";
+        echo "<script>alert('Logged In Succesfully.'); window.location.href = 'LogInView.php';</script>";
         $get = "SELECT * FROM users WHERE username = '$name'";
         $res = $conn->query($get);
         $uid = $res->fetch_array();
-        echo "Your User Id is ";
         $_SESSION['UID']=$uid[0];
         $_SESSION['name']= $uid[1];
         echo $uid[0];
@@ -31,14 +30,12 @@ public function Validate_data($name,$email,$pass){
         if($qry->num_rows > 0){
             
             $_SESSION['usertype'] = "Seller";
-            echo "<h2 align = 'center' >Welcome Back</h2>";
+            echo "<script>alert('Logged In Succesfully.'); window.location.href = 'LogInView.php';</script>";
             $get = "SELECT * FROM sellers WHERE username = '$name'";
             $res = $conn->query($get);
             $sid = $res->fetch_array();
-            echo "Your Seller Id is ";
             $_SESSION['SID']=$sid[0];
             $_SESSION['name']= $sid[1];
-            echo $sid[0];
             echo "<script type='text/javascript'>onclick='window.location.reload(true);'</script>";
             
         }

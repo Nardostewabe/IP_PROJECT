@@ -18,12 +18,12 @@ class SignUp extends Database_connection{
         $result = $conn->query($query);
 
         if($result){
-            header("location: log.html");
+            header("location: LogInView.php");
             exit();
         }
 
         else {
-            die("isertion failed ");
+            echo "<script>alert('SignUp failed.'); window.location.href = 'SignUpView.php';</script>";
         }
     }
 }

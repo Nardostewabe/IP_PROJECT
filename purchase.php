@@ -53,7 +53,7 @@ class purchase extends Database_connection {
 }
 
 if (!isset($_SESSION['UID'])) {
-    header("location:loginto.php");
+    header("location:SignUpView.php");
     exit();
 } elseif (isset($_GET['name']) && isset($_GET['price'])) {
     $purchased = new purchase($_GET['name'], $_GET['price']);

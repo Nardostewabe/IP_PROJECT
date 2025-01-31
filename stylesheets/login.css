@@ -26,23 +26,20 @@
 .Logger-button:hover{
     background-color: lightblue;
 }
-.log iframe{
+.log{
     justify-content: center;
     background: lightpink;
     position: relative;
     top: 90px;
+    left: 200px;
     width: 400px;
     height: 500px;
     margin: 0 auto;
-}
-iframe{
-    display: grid;
 }
 p {
     color:black ;
     font-weight: 800;
 }
-
 p a:hover{
     color: red;
 }
