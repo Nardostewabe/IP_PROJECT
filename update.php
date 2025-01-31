@@ -19,7 +19,6 @@
         <input type="Submit" name="update" value="Update">
     </fieldset>
 </form>
-
 </body>
 <script src="scripts/app.js"></script>
 </html>

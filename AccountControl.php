@@ -55,15 +55,6 @@ class AccountController {
         session_destroy();
         $this->alert("Account deleted successfully!", "SignUpView.php");
     }
-
-    private function alert($message, $redirect = "javascript:window.history.back();") {
-        echo "<script>alert('$message'); window.location.href = '$redirect';</script>";
-    }
-
-    private function redirect($url) {
-        header("Location: $url");
-        exit();
-    }
 }
 
 $controller = new AccountController();

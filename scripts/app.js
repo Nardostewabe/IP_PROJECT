@@ -13,28 +13,28 @@ btn.onclick = function() {
 }
 
 var pass = document.getElementById('pass');
-var pass2= document.getElementById('pass2');
-let msg = document.getElementsByClassName('msg');
-let msg2 = document.getElementsByClassName('msg2');
+    var pass2 = document.getElementById('pass2');
+    let msg = document.getElementsByClassName('msg')[0]; // Get first element
+    let msg2 = document.getElementsByClassName('msg2')[0]; // Get first element
 
+    function f() {
+        if (pass.value.length < 8) {
+            msg.innerHTML = "Password must have more than 8 characters";
+            msg.style.color = "red";
+        } else {
+            msg.innerHTML = "";
+        }
+    }
 
-function f (){
-    if( pass.value.length < 8 ){
-        msg.innerHTML = "Password must have more than 8 characters";
+    function g() {
+        if (pass.value !== pass2.value) {
+            msg2.innerHTML = "Password does not match";
+            msg2.style.color = "red";
+        } else {
+            msg2.innerHTML = "";
+        }
     }
-    else {
-        msg.innerHTML="";
-    }
-};
 
-function g(){
-    if( pass.value != pass2.value ){
-        msg2.innerHTML="Password does not match";
-    }
-    else {
-        msg2.innerHTML="";
-    }
-}
 
 
 

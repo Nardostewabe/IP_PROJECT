@@ -152,10 +152,10 @@ form fieldset{
     <em><p style=" font-size: 20px;">Please fill out the form below</p></em>
     <div><input type="text" name="name" placeholder="Name" class = "Logger" id="inp"> </div><br>
     <div><input type="Email" name="email" placeholder="Email" class = "Logger" id="inp"> </div><br>
-    <div><input type="password" name="password" placeholder="Password" class = "Logger" id="pass" onfocus="f()"></div><br>
-    <div class="msg"></div>
-    <div><input type="password" name="password2" placeholder="Confirm Password"class = "Logger" id="pass2" onfocus="g()"></div> <br> 
-    <div class="msg2"></div>
+    <div><input type="password" name="password" placeholder="Password" class = "Logger" id="pass" onblur = 'f()'></div><br>
+    <p class="msg"></p>
+    <div><input type="password" name="password2" placeholder="Confirm Password"class = "Logger" id="pass2" "onblur = g()"></div> <br> 
+    <p class="msg2"></p> 
     <div><input type="Submit" name="login" value = "Sign Up" class = "Logger-button" ></div>
     <p>Already have an account? <a href="LogInView.php"> Signin</a></p> 
     </fieldset>
@@ -182,6 +182,7 @@ form fieldset{
             </div>
         </div>
     </footer>
-                </body>
-                <script src="scripts/app.js"></script>
+    <script src="scripts/app.js"></script>
+    </body>
+               
 </html>
