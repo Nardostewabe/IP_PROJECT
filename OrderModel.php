@@ -1,35 +1,22 @@
 <?php
-require_once "OrderModel.php";
-session_start();
+require_once "Database_connection.php";
 
-class OrderController {
-    private $orderModel;
+class OrderModel extends Database_connection {
+    public function cancelOrder($orderId, $uid) {
+        $conn = $this->connect();
+        $query = "DELETE FROM orders WHERE OID = ? AND UID = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("ii", $orderId, $uid);
 
-    public function __construct() {
-        $this->orderModel = new OrderModel();
-    }
-
-    public function cancelOrder($orderId) {
-        if (!isset($_SESSION['UID'])) {
-            header("Location: SignUpView.php");
-            exit();
-        }
-
-        $uid = $_SESSION['UID'];
-        $success = $this->orderModel->cancelOrder($orderId, $uid);
-
-        if ($success) {
-            echo "<script>alert('Order canceled successfully!'); window.location.href = 'Vieworders.php';</script>";
+        if ($stmt->execute()) {
+            $stmt->close();
+            $conn->close();
+            return true;
         } else {
-            echo "<script>alert('Failed to cancel order. Please try again.'); window.history.back();</script>";
+            $stmt->close();
+            $conn->close();
+            return false;
         }
     }
-}
-
-if (isset($_GET['order_id'])) {
-    $controller = new OrderController();
-    $controller->cancelOrder($_GET['order_id']);
-} else {
-    echo "<script>alert('Invalid order ID.'); window.history.back();</script>";
 }
 ?>

@@ -100,14 +100,14 @@ else{
             if($_SESSION['usertype']=="Seller"){
                 echo "<h3>Your Seller Id is: ".$_SESSION['SID']."</h3>";
                 echo "<h4><a href='update.php'>Update Your Profile</a></h4>";
-                echo "<h4><a href='delete.php' style='color: red;'>Delete Account</a></h4>";
+                echo "<h4><a href='AccountControl.php' style='color: red;'>Delete Account</a></h4>";
 
             }
             elseif($_SESSION['usertype']=="Customer"){
                 echo "<h3>Your User Id is: ".$_SESSION['UID']."</h3>";
-                echo "<a href='seller.php'><h3>Become A Seller</h3></a>";
+                echo "<a href='BecomeASelllerView.php'><h3>Become A Seller</h3></a>";
                 echo "<h4><a href='update.php'>Update Your Profile</a></h4>";
-                echo "<h4><a href='delete.php' style='color: red;'>Delete Account</a></h4>";
+                echo "<h4><a href='AccountControl.php' style='color: red;'>Delete Account</a></h4>";
 
             }
             ?>

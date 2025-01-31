@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="stylesheets/seller.css">
 </head>
 <body class = "container">
-<form action= "Register.php" method="post"> 
+<form action= "SellerSignUpController.php" method="post"> 
     <fieldset>
         <legend>Welcome to crochet</legend>
         <p>Sign up to kick start your crochet business</p>

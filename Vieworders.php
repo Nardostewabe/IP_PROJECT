@@ -67,103 +67,56 @@ p {
     background-color: #555;
 }
 </style>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Orders</title>
+    <link rel="stylesheet" href="stylesheets/style.css">
+</head>
+<body>
+
+<h1>Your Orders</h1>
+
 <?php
-require_once "Database_connection.php";
-session_start();
+require_once "ViewOrderController.php";
+if (empty($orders)): ?>
+    <p>No orders found.</p>
+<?php else: ?>
+    <table border="1">
+        <tr>
+            <th>Order ID</th>
+            <th>Order Name</th>
+            <th>Price</th>
+            <th>Date</th>
+            <?php if ($user_role == 'Seller'): ?>
+                <th>Customer ID</th>
+            <?php else: ?>
+                <th>Action</th>
+            <?php endif; ?>
+        </tr>
 
-class Orders extends Database_connection {
-    private $conn;
-    private $uid;
-    private $user_role;
+        <?php foreach ($orders as $order){ ?>
+            <tr>
+                <td><?php echo $order['OID']; ?></td>
+                <td><?php echo $order['order_name']; ?></td>
+                <td><?php echo $order['order_price']; ?> ETB</td>
+                <td><?php echo $order['order_date']; ?></td>
 
-    public function __construct($conn, $uid, $user_role) {
-        $this->conn = $conn;
-        $this->uid = $uid;
-        $this->user_role = $user_role;
-    }
+                <?php if ($user_role == 'Seller'): ?>
+                    <td><?php echo $order['UID']; ?></td>
+                <?php else: ?>
+                    <td><a href="OrderController.php?order_id=<?php echo $order['OID']; ?>">Cancel</a></td>
+                <?php endif; ?>
+            </tr>
+        <?php } ?>
+    </table>
+<?php endif; ?>
 
-    public function fetchOrders() {
-        if ($this->user_role == 'Customer') {
-            $query = "SELECT OID, order_name, order_price, order_date FROM orders WHERE UID = ?";
-            $stmt = $this->conn->prepare($query);
-            $stmt->bind_param("i", $this->uid);
-        } elseif ($this->user_role == 'Seller') {
-            $sid = $this->uid;
-            if (!$sid) {
-                echo "You are not registered as a seller.";
-                return;
-            }
-            $query = "SELECT OID, UID, order_name, order_price, order_date FROM orders WHERE sid = ?";
-            $stmt = $this->conn->prepare($query);
-            $stmt->bind_param("i", $sid);
-        } else {
-            echo "You have not made a purchase.";
-            return;
-        }
+</body>
+</html>
 
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        if ($result->num_rows > 0) {
-            echo "<table border='1'>
-                    <tr>
-                        <th>Order ID</th>
-                        <th>Order Name</th>
-                        <th>Price</th>
-                        <th>Date</th>";
-            if ($this->user_role == 'Seller') {
-                echo "<th>Customer ID</th>";
-            } else {
-                echo "<th>Action</th>";
-            }
-            echo "</tr>";
-
-            while ($row = $result->fetch_assoc()) {
-                echo "<tr>
-                        <td>{$row['OID']}</td>
-                        <td>{$row['order_name']}</td>
-                        <td>{$row['order_price']} ETB</td>
-                        <td>{$row['order_date']}</td>";
-                if ($this->user_role == 'Seller') {
-                    echo "<td>{$row['UID']}</td>";
-                } else {
-                    echo "<td><a href='OrderController.php?order_id={$row['OID']}'>Cancel</a></td>";
-                }
-                echo "</tr>";
-            }
-            echo "</table>";
-        } else {
-            echo "<p>No orders found.</p>";
-        }
-
-        $stmt->close();
-    }
-}
-if (!$_SESSION) {
-    header("Location: SignUpView.php");
-    exit();
-}
-
-if ($_SESSION['usertype'] == "Customer"){
-    $uid = $_SESSION['UID'];
-}
-elseif($_SESSION['usertype']== "Seller"){
-    $uid = $_SESSION['SID'];
-}
-
-else{
-    echo "<p>Invalid User Type</p>";
-}
-
-$user_role = $_SESSION['usertype'];
-
-echo "<h1>Your Orders</h1>";
-
-$db = new Database_connection();
-$conn = $db->connect();
-$orders = new Orders( $conn,$uid, $user_role);
-$orders->fetchOrders();
-
-$conn->close();
-?>
 
